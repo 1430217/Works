@@ -43,12 +43,12 @@ class ProyectoController extends Controller
         $proyecto->tipoProyecto = request('tipoProyecto');
         $proyecto->presupuesto = request('presupuesto');
         $proyecto->descripcion = request('descripcion');
-        $proyecto->estado = request('estado');
         $proyecto->id_empresa = Auth::user()->id;
+        $proyecto->nombre_empresa = Auth::user()->name;
 
 
         $proyecto->save();
-        return view('proyectos.index');
+        return redirect('/proyectos/ver_mis_proyecto');
     }
 
     /**
@@ -70,7 +70,8 @@ class ProyectoController extends Controller
      */
     public function edit(Proyecto $proyecto)
     {
-        //
+        return view('proyectos.edit', compact('proyecto'));
+
     }
 
     /**
@@ -82,7 +83,16 @@ class ProyectoController extends Controller
      */
     public function update(Proyecto $proyecto)
     {
-        //
+        
+        $proyecto->nombre=request('nombre');
+        $proyecto->presupuesto=request('presupuesto');
+        $proyecto->tipoProyecto=request('tipoProyecto');
+        $proyecto->estado=request('estado');
+        $proyecto->descripcion=request('descripcion');
+        $proyecto->save();
+        return redirect('/proyecto');
+      
+    
     }
 
     /**

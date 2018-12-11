@@ -26,6 +26,17 @@ Route::get('/registrar/{tipo}', 'PagesController@registrar')->name('registrar');
 Route::get('/registrar/{tipo}', 'PagesController@registrarFreelancer')->name('registrarFreelancer');
 Route::post('/registrar', 'PagesController@registrarUser')->name('registrarUser');
 
+//rutas para los proyectos
 Route::resource('/proyecto', 'ProyectoController');
+Route::get('/proyectos/ver_mis_proyecto', 'ProyectoController@index');
+
+Route::get('/usuarios/ver_usarios', 'UsuariosController@index');
+
+Route::get('/usuarios/{id}/info', 'UsuariosController@edit');
+
+
+Route::post('/usuarios/{id}/info-coment','UsuariosController@comentario');
+
+
 
 

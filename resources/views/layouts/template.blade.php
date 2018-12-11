@@ -42,9 +42,9 @@ desired effect
     <!-- Logo -->
     <a href="/dashboard" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>U</b>MED</span>
+      <span class="logo-mini"><b>W</b>ORKS</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Woerks</b></span>
+      <span class="logo-lg"><b>{{config('app.name', 'Works')}}</b></span>
     </a>
 
     <!-- Header Navbar -->
@@ -72,7 +72,7 @@ desired effect
 
                 <p>
                     {{Auth::user()->name}}
-                  <small>Miembro desde: </small>
+                  <small>{{Auth::user()->tipoUsuario}}</small>
                 </p>
               </li>
           
@@ -131,7 +131,13 @@ desired effect
         <li class="header">Navegación</li>
 
         <!-- Navegación / paginas -->
-        <li><a href="/dashboard"><i class="fa fa-tachometer"></i> <span>dashboard</span></a></li>
+        @if(Auth::User()->tipoUsuario=="Freelancer")
+          <li><a href="/usuarios/ver_usarios"><i class="fa fa-tachometer"></i> <span>Ver empresas</span></a></li>
+        @endif
+        @if(Auth::User()->tipoUsuario=="Empresa")
+          <li><a href="/usuarios/ver_usarios"><i class="fa fa-tachometer"></i> <span>Ver freelancers</span></a></li>
+        @endif
+        
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Proyectos</span>
@@ -140,8 +146,13 @@ desired effect
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a data-toggle="modal" data-target="#modal-p"><i class="fa fa-circle-o"></i>Agregar Proyectos</a></li>
-            <li><a href="{{route('proyecto.index')}}"><i class="fa fa-circle-o"></i> Ver Proyectos</a></li>
+            @if(Auth::User()->tipoUsuario=="Freelancer")
+              <li><a href="{{route('proyecto.index')}}"><i class="fa fa-circle-o"></i> Ver mis proyectos</a></li>
+              
+            @else
+              <li><a data-toggle="modal" data-target="#modal-p"><i class="fa fa-circle-o"></i>Agregar Proyectos</a></li>
+              <li><a href="{{route('proyecto.index')}}"><i class="fa fa-circle-o"></i> Ver mis proyectos</a></li>
+            @endif
           </ul>
         </li>
         
@@ -200,13 +211,7 @@ desired effect
                         </div>
                     </div>
 
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Estado</label>
-  
-                      <div class="col-sm-10">
-                          <input type="text" name="estado" class="form-control" placeholder="Estado">
-                      </div>
-                    </div>
+                    
 
                     <div class="form-group">
                       <label class="col-sm-2 control-label">Tipo de proyecto</label>
@@ -220,7 +225,7 @@ desired effect
                         <label class="col-sm-2 control-label">Presupuesto</label>
     
                         <div class="col-sm-10">
-                            <input type="text" name="presupuesto"class="form-control" placeholder="$">
+                            <input type="number" name="presupuesto"class="form-control" placeholder="$">
                         </div>
                     </div>
 
